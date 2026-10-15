@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DentalCare - Gestión de Pacientes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ================= NOTIFICACIÓN TOAST ================= -->
+  <div id="toast-container" class="toast-container">
+    <div id="success-toast" class="toast toast-success hidden">
+      <div class="toast-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+      <div class="toast-content">
+        <h4 class="toast-title">¡Guardado con éxito!</h4>
+        <p class="toast-message" id="toast-message">Se guardó correctamente la información del paciente.</p>
+      </div>
+      <button class="toast-close" id="toast-close-btn">&times;</button>
+    </div>
+  </div>
+
+  <!-- ================= PANTALLA: DASHBOARD / GESTIÓN DE PACIENTES ================= -->
+  <div class="dashboard-screen">
+    <!-- Barra superior fina roja de acento -->
+    <div class="top-accent-bar"></div>
+
+    <!-- Barra de navegación principal -->
+    <header class="app-navbar">
+      <div class="navbar-left">
+        <button id="mobile-menu-toggle" class="mobile-menu-btn" aria-label="Abrir menú">
+          <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+        <a href="pacientes.html" class="navbar-brand" style="text-decoration: none; color: inherit;">
+          <div class="navbar-tooth-icon">
+            <svg viewBox="0 0 24 24" width="18" height="18">
+              <path d="M12 2C8.5 2 6 4.2 6 7.5C6 10 7.2 11.8 7.8 14C8.6 17 8.2 21 10.2 21.8C10.8 22 11.4 21.3 11.8 20.3C12.1 19.3 12 18 12 16.5C12 18 11.9 19.3 12.2 20.3C12.6 21.3 13.2 22 13.8 21.8C15.8 21 15.4 17 16.2 14C16.8 11.8 18 10 18 7.5C18 4.2 15.5 2 12 2Z" fill="#2d60e8"/>
+            </svg>
+          </div>
+          <span class="navbar-brand-name">DentalCare</span>
+        </a>
+      </div>
+
+      <div class="navbar-user">
+        <span class="user-email" id="current-user-email">admin@dentalcare.com</span>
+        <a href="index.html" id="btn-logout" class="btn-logout" style="text-decoration: none; display: inline-flex; align-items: center;">Cerrar sesión</a>
+      </div>
+    </header>
+
+    <!-- Layout principal: Sidebar + Contenido -->
+    <div class="dashboard-layout">
+      <!-- Barra lateral de navegación -->
+      <aside class="sidebar" id="sidebar">
+        <nav class="sidebar-nav">
+          <a href="pacientes.html" class="nav-item active">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+            </span>
+            <span class="nav-label">Pacientes</span>
+          </a>
+
+          <a href="#" class="nav-item">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+            </span>
+            <span class="nav-label">Citas</span>
+          </a>
+
+          <a href="#" class="nav-item">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+              </svg>
+            </span>
+            <span class="nav-label">Historias clínicas</span>
+          </a>
+
+          <a href="#" class="nav-item">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+              </svg>
+            </span>
+            <span class="nav-label">Configuración</span>
+          </a>
+        </nav>
+      </aside>
+
+      <!-- Contenido central -->
+      <main class="dashboard-main">
+        <!-- Encabezado de página y acción principal -->
+        <div class="page-header">
+          <div class="header-titles">
+            <span class="breadcrumb-tag">PANEL PRINCIPAL</span>
+            <h2 class="main-title">Gestión de pacientes</h2>
+            <p class="subtitle">Consulta y administra la información de tus pacientes.</p>
+          </div>
+          <div class="header-actions">
+            <button id="btn-open-modal" class="btn-primary btn-add-patient">
+              <span class="plus-icon">+</span> Nuevo paciente
+            </button>
+          </div>
+        </div>
+
+        <!-- Tarjetas de métricas -->
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <span class="metric-title">Total pacientes</span>
+            <span class="metric-number" id="stat-total-patients">24</span>
+            <span class="metric-status">Registrados</span>
+          </div>
+
+          <div class="metric-card">
+            <span class="metric-title">Citas de hoy</span>
+            <span class="metric-number">6</span>
+            <span class="metric-status">Programadas</span>
+          </div>
+
+          <div class="metric-card">
+            <span class="metric-title">Historias clínicas</span>
+            <span class="metric-number">18</span>
+            <span class="metric-status">Actualizadas</span>
+          </div>
+        </div>
+
+        <!-- Tarjeta de Pacientes Recientes con Tabla -->
+        <div class="content-card">
+          <div class="card-toolbar">
+            <h3 class="card-title">Pacientes recientes</h3>
+            <div class="search-box">
+              <input type="text" id="patient-search" placeholder="Buscar paciente...">
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="patients-table">
+              <thead>
+                <tr>
+                  <th>Paciente</th>
+                  <th>Documento</th>
+                  <th>Teléfono</th>
+                  <th>Última visita</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody id="patients-table-body">
+                <tr>
+                  <td class="patient-name">María González</td>
+                  <td>1.112.345.678</td>
+                  <td>300 123 4567</td>
+                  <td>02/09/2026</td>
+                  <td><span class="badge badge-active">Activo</span></td>
+                </tr>
+                <tr>
+                  <td class="patient-name">Carlos Rodríguez</td>
+                  <td>1.023.456.789</td>
+                  <td>310 555 0182</td>
+                  <td>01/09/2026</td>
+                  <td><span class="badge badge-active">Activo</span></td>
+                </tr>
+                <tr>
+                  <td class="patient-name">Laura Martínez</td>
+                  <td>1.098.765.432</td>
+                  <td>315 222 1144</td>
+                  <td>28/08/2026</td>
+                  <td><span class="badge badge-pending">Pendiente</span></td>
+                </tr>
+                <tr>
+                  <td class="patient-name">Andrés Pérez</td>
+                  <td>1.045.678.901</td>
+                  <td>301 444 7788</td>
+                  <td>25/08/2026</td>
+                  <td><span class="badge badge-active">Activo</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- ================= PANTALLA: MODAL NUEVO PACIENTE ================= -->
+  <div id="patient-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modal-title" class="modal-title">Nuevo paciente</h3>
+        <button id="btn-close-modal" class="btn-close" aria-label="Cerrar modal">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <p class="modal-disclaimer">Este formulario es una demostración para el avance del proyecto.</p>
+
+        <form id="new-patient-form">
+          <div class="modal-form-group">
+            <input 
+              type="text" 
+              id="patient-fullname" 
+              class="modal-input" 
+              placeholder="Nombre completo" 
+              value="jasson"
+            >
+          </div>
+
+          <div class="modal-form-group">
+            <input 
+              type="text" 
+              id="patient-doc" 
+              class="modal-input" 
+              placeholder="Documento"
+            >
+          </div>
+
+          <div class="modal-form-group">
+            <input 
+              type="tel" 
+              id="patient-phone" 
+              class="modal-input" 
+              placeholder="Teléfono"
+            >
+          </div>
+
+          <button type="submit" id="btn-save-patient" class="btn-primary btn-save">
+            Guardar paciente
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="pacientes.js"></script>
+</body>
+</html>
